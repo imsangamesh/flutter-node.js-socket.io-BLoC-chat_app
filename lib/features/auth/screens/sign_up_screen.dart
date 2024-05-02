@@ -1,7 +1,7 @@
 import 'package:chat_app/core/common/buttons.dart';
 import 'package:chat_app/core/common/widgets/app_textfield.dart';
 import 'package:chat_app/core/constants/app_text_styles.dart';
-import 'package:chat_app/core/constants/constants.dart';
+import 'package:chat_app/core/constants/images.dart';
 import 'package:chat_app/core/extensions/context_extension.dart';
 import 'package:chat_app/core/services/injection_container.dart';
 import 'package:chat_app/core/utils/nav_utils.dart';
@@ -12,7 +12,6 @@ import 'package:chat_app/features/auth/screens/sign_in_screen.dart';
 import 'package:chat_app/features/chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -59,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           AppSnackbar.error(context, state.message);
         } else if (state is AuthSuccess) {
           NavUtils.offAll(context, const ChatScreen());
-          AppSnackbar.success(context, 'Sign Up successful!');
+          AppSnackbar.success(context, 'Signed Up successfully!');
         }
       },
       builder: (_, state) {
@@ -72,17 +71,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Sign Up', style: AppTStyles.large),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(AppImages.logo, width: 40),
+                        const SizedBox(width: 10),
+                        Text('Sign Up', style: AppTStyles.large),
+                      ],
+                    ),
                     const SizedBox(height: 20),
 
                     /// -------------------- `NAME`
-                    AppTextField(nameCntr, 'Name'),
+                    AppTextField(
+                      nameCntr,
+                      'Name',
+                      validator: Validators.notEmpty,
+                    ),
 
                     /// -------------------- `EMAIL`
                     AppTextField(
                       emailCntr,
                       'Email',
                       inputType: TextInputType.emailAddress,
+                      validator: Validators.email,
                     ),
 
                     /// -------------------- `PASSWORD`
@@ -92,6 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           passwordCntr,
                           'Password',
                           isObscure: isObscure,
+                          validator: Validators.notEmpty,
                           suffixIcon: isObscure
                               ? Icons.visibility
                               : Icons.visibility_off,
@@ -127,11 +139,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ],
                     ),
-
-                    OutlinedBtn('Clear', () async {
-                      await Hive.box<UserModel>(BoxKeys.allUsers)
-                          .deleteFromDisk();
-                    }),
                   ],
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:chat_app/core/common/buttons.dart';
 import 'package:chat_app/core/common/widgets/app_textfield.dart';
 import 'package:chat_app/core/constants/app_text_styles.dart';
+import 'package:chat_app/core/constants/images.dart';
 import 'package:chat_app/core/extensions/context_extension.dart';
 import 'package:chat_app/core/utils/nav_utils.dart';
 import 'package:chat_app/core/utils/utils.dart';
@@ -50,7 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
           AppSnackbar.error(context, state.message);
         } else if (state is AuthSuccess) {
           NavUtils.offAll(context, const ChatScreen());
-          AppSnackbar.success(context, 'Sign In successful!');
+          AppSnackbar.success(context, 'Signed In successfully!');
         }
       },
       builder: (context, state) {
@@ -63,11 +64,22 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Sign In', style: AppTStyles.large),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(AppImages.logo, width: 40),
+                        const SizedBox(width: 10),
+                        Text('Sign In', style: AppTStyles.large),
+                      ],
+                    ),
                     const SizedBox(height: 20),
 
                     /// -------------------- `EMAIL`
-                    AppTextField(emailCntr, 'Email'),
+                    AppTextField(
+                      emailCntr,
+                      'Email',
+                      validator: Validators.email,
+                    ),
 
                     /// -------------------- `PASSWORD`
                     StatefulBuilder(
@@ -76,6 +88,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           passwordCntr,
                           'Password',
                           isObscure: isObscure,
+                          validator: Validators.notEmpty,
                           suffixIcon: isObscure
                               ? Icons.visibility
                               : Icons.visibility_off,

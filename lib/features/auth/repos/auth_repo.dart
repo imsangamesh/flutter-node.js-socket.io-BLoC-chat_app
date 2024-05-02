@@ -74,6 +74,17 @@ class AuthRepo {
     }
   }
 
+  /// - - - - - - - - - - - - - - - - - - - - - - - - - - - -  `EDIT USER`
+  FutureVoid editUser(UserModel editedUser) async {
+    try {
+      final userIndex = appBox.get(BoxKeys.userIndex) as int;
+      await usersBox.putAt(userIndex, editedUser);
+      return right(null);
+    } catch (e) {
+      return left(ApiFailure(e.toString()));
+    }
+  }
+
   ///
 
   Future<void> _storeUserIndex(int index) async {

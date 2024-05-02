@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 
+const ipAddress = 'http://192.168.186.210:3000';
+
 void main() async {
   await Hive.initFlutter();
 
@@ -58,14 +60,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-/*
-
-last time - check with theme cubit
-remove all unused files
-proper validation for email and others - Validators class (if possible)
-a very quick check on chat_tile_color_dark
-app icons change to chat
-display name in chat_tile
-
-*/

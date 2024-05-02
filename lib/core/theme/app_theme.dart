@@ -32,16 +32,17 @@ class AppTheme {
 
       /// -------------------------------------- `LISTTILES`
       listTileTheme: listTile(c),
+      expansionTileTheme: expansionTile(c),
 
       /// -------------------------------------- `TEXTFIELD`
       inputDecorationTheme: inputDecorationTheme(c),
 
       /// -------------------------------------- `OTHERS`
-      iconTheme: iconTheme(),
-      dividerTheme: dividerTheme(),
-      progressIndicatorTheme: progressIndicator(),
-      switchTheme: switchTheme(),
-      dialogTheme: dialogTheme(),
+      iconTheme: iconTheme(c),
+      dividerTheme: dividerTheme(c),
+      progressIndicatorTheme: progressIndicator(c),
+      switchTheme: switchTheme(c),
+      dialogTheme: dialogTheme(c),
     );
   }
 
@@ -57,38 +58,34 @@ class AppTheme {
       textTheme: Theme.of(c).textTheme.apply(bodyColor: AppColors.white),
 
       /// -------------------------------------- `CORE WIDGETS`
-      appBarTheme: appBarTheme(c, true),
-      floatingActionButtonTheme: floatingActionButton(c, true),
-      drawerTheme: drawer(c, true),
+      appBarTheme: appBarTheme(c),
+      floatingActionButtonTheme: floatingActionButton(c),
+      drawerTheme: drawer(c),
 
       /// -------------------------------------- `BUTTONS`
-      elevatedButtonTheme: elevatedButton(true),
-      outlinedButtonTheme: outlinedButton(true),
-      textButtonTheme: textButton(true),
-      toggleButtonsTheme: toggleButton(c, true),
+      elevatedButtonTheme: elevatedButton(),
+      outlinedButtonTheme: outlinedButton(),
+      textButtonTheme: textButton(),
+      toggleButtonsTheme: toggleButton(c),
 
       /// -------------------------------------- `LISTTILES`
-      listTileTheme: listTile(c, true),
+      listTileTheme: listTile(c),
+      expansionTileTheme: expansionTile(c),
 
       /// -------------------------------------- `TEXTFIELD`
-      inputDecorationTheme: inputDecorationTheme(c, true),
+      inputDecorationTheme: inputDecorationTheme(c),
 
       /// -------------------------------------- `OTHERS`
-      iconTheme: iconTheme(true),
-      dividerTheme: dividerTheme(true),
-      progressIndicatorTheme: progressIndicator(true),
-      dialogTheme: dialogTheme(),
+      iconTheme: iconTheme(c),
+      dividerTheme: dividerTheme(c),
+      progressIndicatorTheme: progressIndicator(c),
+      dialogTheme: dialogTheme(c),
     );
   }
 
-  /// ---------------------------------------------------------- `COLORS`
-
-  static Color normalColor(bool isDark) =>
-      isDark ? AppColors.white : AppColors.black;
-
   /// ---------------------------------------------------------- `CORE WIDGETS`
 
-  static AppBarTheme appBarTheme(BuildContext c, [bool isDark = false]) {
+  static AppBarTheme appBarTheme(BuildContext c) {
     return Theme.of(c).appBarTheme.copyWith(
           iconTheme: IconThemeData(color: AppColors.prim, size: 24),
           titleTextStyle: TextStyle(
@@ -101,25 +98,22 @@ class AppTheme {
         );
   }
 
-  static DrawerThemeData drawer(BuildContext c, [bool isDark = false]) {
+  static DrawerThemeData drawer(BuildContext c) {
     return Theme.of(c).drawerTheme.copyWith(
           backgroundColor: AppColors.scaffold,
         );
   }
 
-  static FloatingActionButtonThemeData floatingActionButton(
-    BuildContext c, [
-    bool isDark = false,
-  ]) {
+  static FloatingActionButtonThemeData floatingActionButton(BuildContext c) {
     return Theme.of(c).floatingActionButtonTheme.copyWith(
-          backgroundColor: isDark ? AppColors.purple : AppColors.pink,
+          backgroundColor: AppColors.prim,
           iconSize: 30,
         );
   }
 
   /// ---------------------------------------------------------- `BUTTONS`
 
-  static ElevatedButtonThemeData elevatedButton([bool isDark = false]) {
+  static ElevatedButtonThemeData elevatedButton() {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: kButtonPad),
@@ -135,7 +129,7 @@ class AppTheme {
     );
   }
 
-  static OutlinedButtonThemeData outlinedButton([bool isDark = false]) {
+  static OutlinedButtonThemeData outlinedButton() {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: kButtonPad),
@@ -150,7 +144,7 @@ class AppTheme {
     );
   }
 
-  static TextButtonThemeData textButton([bool isDark = false]) {
+  static TextButtonThemeData textButton() {
     return TextButtonThemeData(
       style: TextButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -164,13 +158,10 @@ class AppTheme {
     );
   }
 
-  static ToggleButtonsThemeData toggleButton(
-    BuildContext c, [
-    bool isDark = false,
-  ]) {
+  static ToggleButtonsThemeData toggleButton(BuildContext c) {
     return Theme.of(c).toggleButtonsTheme.copyWith(
           selectedColor: AppColors.prim,
-          color: normalColor(isDark),
+          color: AppColors.normal,
           borderColor: AppColors.prim.withAlpha(100),
           selectedBorderColor: AppColors.prim,
           borderRadius: BorderRadius.circular(kBR),
@@ -180,7 +171,7 @@ class AppTheme {
 
   /// ---------------------------------------------------------- `LIST TILES`
 
-  static ListTileThemeData listTile(BuildContext c, [bool isDark = false]) {
+  static ListTileThemeData listTile(BuildContext c) {
     return Theme.of(c).listTileTheme.copyWith(
           tileColor: AppColors.listTile,
           contentPadding: const EdgeInsets.fromLTRB(17, 1, 5, 1),
@@ -192,13 +183,23 @@ class AppTheme {
         );
   }
 
+  static ExpansionTileThemeData expansionTile(BuildContext c) {
+    return Theme.of(c).expansionTileTheme.copyWith(
+          iconColor: AppColors.prim,
+          textColor: AppColors.prim,
+          collapsedTextColor: AppColors.normal,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          collapsedShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        );
+  }
+
   /// ---------------------------------------------------------- `TEXTFIELD`
   ///
 
-  static InputDecorationTheme inputDecorationTheme(
-    BuildContext c, [
-    bool isDark = false,
-  ]) {
+  static InputDecorationTheme inputDecorationTheme(BuildContext c) {
     return Theme.of(c).inputDecorationTheme.copyWith(
           labelStyle: TextStyle(color: AppColors.prim, fontSize: 15),
           counterStyle: TextStyle(color: AppColors.mid),
@@ -231,41 +232,41 @@ class AppTheme {
 
   /// ---------------------------------------------------------- `OTHERS`
 
-  static IconThemeData iconTheme([bool isDark = false]) {
-    return const IconThemeData().copyWith(
-      color: AppColors.prim,
-      size: 28,
-    );
+  static IconThemeData iconTheme(BuildContext c) {
+    return Theme.of(c).iconTheme.copyWith().copyWith(
+          color: AppColors.prim,
+          size: 28,
+        );
   }
 
-  static DividerThemeData dividerTheme([bool isDark = false]) {
-    return const DividerThemeData().copyWith(
-      color: AppColors.prim.withAlpha(50),
-      space: kDividerHt,
-      indent: 10,
-      endIndent: 10,
-    );
+  static DividerThemeData dividerTheme(BuildContext c) {
+    return Theme.of(c).dividerTheme.copyWith().copyWith(
+          color: AppColors.prim.withAlpha(50),
+          space: kDividerHt,
+          indent: 10,
+          endIndent: 10,
+        );
   }
 
-  static ProgressIndicatorThemeData progressIndicator([bool isDark = false]) {
-    return ProgressIndicatorThemeData(
-      color: AppColors.prim,
-      circularTrackColor: AppColors.scaffold,
-    );
+  static ProgressIndicatorThemeData progressIndicator(BuildContext c) {
+    return Theme.of(c).progressIndicatorTheme.copyWith(
+          color: AppColors.prim,
+          circularTrackColor: AppColors.scaffold,
+        );
   }
 
-  static SwitchThemeData switchTheme() {
-    return SwitchThemeData(
-      trackOutlineColor: MaterialStateProperty.resolveWith(
-        (states) => AppColors.prim,
-      ),
-    );
+  static SwitchThemeData switchTheme(BuildContext c) {
+    return Theme.of(c).switchTheme.copyWith(
+          trackOutlineColor: MaterialStateProperty.resolveWith(
+            (states) => AppColors.light,
+          ),
+        );
   }
 
-  static DialogTheme dialogTheme() {
-    return DialogTheme(
-      titleTextStyle: AppTStyles.heading,
-      contentTextStyle: AppTStyles.body,
-    );
+  static DialogTheme dialogTheme(BuildContext c) {
+    return Theme.of(c).dialogTheme.copyWith(
+          titleTextStyle: AppTStyles.heading,
+          contentTextStyle: AppTStyles.body,
+        );
   }
 }

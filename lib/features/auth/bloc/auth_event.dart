@@ -11,15 +11,16 @@ final class AuthSignUp extends AuthEvent {
 }
 
 final class AuthSignIn extends AuthEvent {
-  const AuthSignIn({
-    required this.email,
-    required this.password,
-  });
-
+  const AuthSignIn({required this.email, required this.password});
   final String email;
   final String password;
 }
 
 final class AuthSignOut extends AuthEvent {
   const AuthSignOut();
+}
+
+final class AuthUserEdit extends AuthEvent {
+  const AuthUserEdit(this.editedUser);
+  final UserModel editedUser;
 }

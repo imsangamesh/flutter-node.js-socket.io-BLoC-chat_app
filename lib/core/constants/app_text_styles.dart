@@ -29,6 +29,11 @@ class AppTStyles {
         color: AppColors.prim,
       );
 
+  static TextStyle get subHeading => const TextStyle(
+        fontSize: 17,
+        fontWeight: FontWeight.w500,
+      );
+
   static TextStyle get heading => TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,

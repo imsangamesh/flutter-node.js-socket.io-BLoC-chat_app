@@ -24,7 +24,6 @@ class ThemeCubit extends Cubit<bool> {
 
   void setUp() {
     emit(isDark);
-    emit(isDark);
     log(' - - - - THEME setup complete | isDark: $state - - - - ');
   }
 

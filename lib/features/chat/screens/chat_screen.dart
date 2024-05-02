@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:chat_app/core/common/buttons.dart';
 import 'package:chat_app/core/common/util_widgets.dart';
 import 'package:chat_app/core/common/widgets/app_textfield.dart';
+import 'package:chat_app/core/constants/images.dart';
 import 'package:chat_app/core/services/injection_container.dart';
 import 'package:chat_app/core/services/typedefs.dart';
 import 'package:chat_app/core/utils/nav_utils.dart';
@@ -10,12 +11,12 @@ import 'package:chat_app/core/utils/utils.dart';
 import 'package:chat_app/features/auth/screens/profile_screen.dart';
 import 'package:chat_app/features/chat/bloc/chat_bloc.dart';
 import 'package:chat_app/features/chat/models/msg_model.dart';
+import 'package:chat_app/features/chat/screens/info_screen.dart';
 import 'package:chat_app/features/chat/widgets/chat_msg_tile.dart';
+import 'package:chat_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-
-const url = 'http://192.168.186.210:3000';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -39,7 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
   /// - - - - - - - - - - - - - - - - - - - `INITIATE SOCKET`
   void initiateSocket() {
     socket = io(
-      url,
+      ipAddress,
       OptionBuilder().setTransports(['websocket']).disableAutoConnect().build(),
     );
 
@@ -63,6 +64,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   /// - - - - - - - - - - - - - - - - - - - `SEND MESSAGE`
   void sendMessage() {
+    final typedMessage = msgCntr.text.trim();
+    if (typedMessage.isEmpty) {
+      AppSnackbar.error(context, 'Please enter your message!');
+      return;
+    }
+
     final user = slAuth.user!;
     final message = MsgModel(
       userId: user.id,
@@ -107,7 +114,13 @@ class _ChatScreenState extends State<ChatScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Chat Room'),
+            title: Row(
+              children: [
+                Image.asset(AppImages.logo, width: 40),
+                const SizedBox(width: 10),
+                const Text('Chat Room'),
+              ],
+            ),
             actions: [
               if (state is ChatsLoaded && state.messages.isNotEmpty)
                 IconButton(
@@ -117,6 +130,10 @@ class _ChatScreenState extends State<ChatScreen> {
               IconButton(
                 onPressed: () => NavUtils.to(context, const ProfileScreen()),
                 icon: const Icon(Icons.person_4_rounded),
+              ),
+              IconButton(
+                onPressed: () => NavUtils.to(context, const InfoScreen()),
+                icon: const Icon(Icons.info_outline),
               ),
             ],
           ),
@@ -158,7 +175,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   'Your message',
                   maxLines: null,
                   bottomPadding: 3,
-                  suffixFun: msgCntr.text.isEmpty ? null : sendMessage,
+                  suffixFun: sendMessage,
                   suffixIcon: Icons.send_rounded,
                 ),
               ],

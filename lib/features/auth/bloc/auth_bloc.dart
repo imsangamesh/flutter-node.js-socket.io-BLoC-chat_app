@@ -15,6 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignUp>(_onSignUp);
     on<AuthSignIn>(_onSignIn);
     on<AuthSignOut>(_onSignOut);
+    on<AuthUserEdit>(_onUserEdit);
   }
 
   final AuthRepo _authRepo;
@@ -45,6 +46,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onSignOut(AuthSignOut event, Emitter<AuthState> emit) async {
     final result = await _authRepo.signOut();
+
+    result.fold(
+      (failure) => emit(AuthFailure(failure.message)),
+      (r) => emit(const AuthSignedOut()),
+    );
+  }
+
+  Future<void> _onUserEdit(AuthUserEdit event, Emitter<AuthState> emit) async {
+    final result = await _authRepo.editUser(event.editedUser);
 
     result.fold(
       (failure) => emit(AuthFailure(failure.message)),

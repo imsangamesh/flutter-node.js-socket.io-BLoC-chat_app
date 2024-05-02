@@ -17,6 +17,7 @@ class AppTextField extends StatelessWidget {
     this.autoFocus = false,
     this.isObscure = false,
     this.readOnly = false,
+    this.validator,
     super.key,
   });
 
@@ -34,18 +35,14 @@ class AppTextField extends StatelessWidget {
   final double? bottomPadding;
   final bool isObscure;
   final bool readOnly;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: bottomPadding ?? 15),
       child: TextFormField(
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return '$label is empty!';
-          }
-          return null;
-        },
+        validator: validator,
         controller: controller,
         maxLines: maxLines,
         maxLength: maxLength,
@@ -72,5 +69,28 @@ class AppTextField extends StatelessWidget {
         onFieldSubmitted: onSubmit == null ? null : (_) => onSubmit!(),
       ),
     );
+  }
+}
+
+class Validators {
+  Validators._();
+
+  /// - - - - - - - - - - - - - - - - - - - - - `EMAIL`
+  static String? email(String? value) {
+    final emailRegEx = RegExp(r'^\S+@\S+\.\S+$');
+    if (value == null || value.isEmpty) {
+      return 'Please provide your email!';
+    } else if (!emailRegEx.hasMatch(value)) {
+      return 'Please provide a valid email!';
+    }
+    return null;
+  }
+
+  /// - - - - - - - - - - - - - - - - - - - - - `VALUE NOT EMPTY`
+  static String? notEmpty(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'This field is required!';
+    }
+    return null;
   }
 }

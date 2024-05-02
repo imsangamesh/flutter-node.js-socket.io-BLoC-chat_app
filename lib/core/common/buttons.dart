@@ -78,3 +78,38 @@ class OutlinedBtn extends StatelessWidget {
     );
   }
 }
+
+/// ----------------------------------------------------- `TEXT`
+class TextBtn extends StatelessWidget {
+  const TextBtn(
+    this.label,
+    this.ontap, {
+    this.icon,
+    this.loading = false,
+    super.key,
+  });
+
+  final VoidCallback? ontap;
+  final String label;
+  final IconData? icon;
+  final bool loading;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: loading ? null : ontap,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (loading)
+            const BtnLoader()
+          else if (icon != null)
+            Icon(icon, size: 20),
+          //
+          if (icon != null || loading) const SizedBox(width: 7),
+          Text(label),
+        ],
+      ),
+    );
+  }
+}

@@ -95,8 +95,8 @@ class ThemeSwitch extends StatelessWidget {
     return Switch(
       value: value,
       onChanged: (_) => onTap(),
-      activeThumbImage: const AssetImage(Images.darkMode),
-      inactiveThumbImage: const AssetImage(Images.lightMode),
+      activeThumbImage: const AssetImage(AppImages.darkMode),
+      inactiveThumbImage: const AssetImage(AppImages.lightMode),
     );
   }
 }

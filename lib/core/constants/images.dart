@@ -1,11 +1,7 @@
-class Images {
-  Images._();
+class AppImages {
+  AppImages._();
 
-  static const login = 'assets/login.jpg';
+  static const logo = 'assets/logo.png';
   static const darkMode = 'assets/dark_mode.png';
   static const lightMode = 'assets/light_mode.png';
-
-  static const userUrl =
-      'https://unsplash.com/photos/silhouette-of-man-illustration-2LowviVHZ-E';
-  // static const randomUsersUrl = 'https://source.unsplash.com/random/?person';
 }

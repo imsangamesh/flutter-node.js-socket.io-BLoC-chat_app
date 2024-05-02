@@ -4,6 +4,7 @@ import 'package:chat_app/core/services/injection_container.dart';
 import 'package:chat_app/core/theme/cubit/theme_cubit.dart';
 import 'package:chat_app/features/chat/models/msg_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -34,10 +35,10 @@ class ChatMsgTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ---------------------- message
+              // ---------------------- MESSAGE
               Text(message.msg, style: AppTStyles.body),
 
-              // ---------------------- date and time
+              // ---------------------- SENDER NAME | DATE & TIME
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
@@ -50,9 +51,28 @@ class ChatMsgTile extends StatelessWidget {
                       topLeft: Radius.circular(7),
                     ),
                   ),
-                  child: Text(
-                    DateFormat('MMM dd | HH:mm').format(message.date),
-                    style: const TextStyle(fontSize: 11),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Name
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 150),
+                        child: Text(
+                          message.sentBy,
+                          style: const TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      // Date & Time
+                      Text(
+                        '  •  ${DateFormat('MMM dd | HH:mm').format(message.date)}',
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                    ],
                   ),
                 ),
               ),
