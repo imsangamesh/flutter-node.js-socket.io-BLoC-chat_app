@@ -6,7 +6,7 @@ class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
 
   Text subHeading(String text) => Text(
-        '● $text:',
+        '• $text:',
         style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
@@ -35,21 +35,10 @@ class InfoScreen extends StatelessWidget {
                 InfoTile(
                   title: 'Chat Connection',
                   children: [
-                    subHeading('Server set up'),
-                    body(
-                      'Please go to `server` directory from root directory and run `npm install` to install packages.',
-                    ),
-                    body(
-                      'Run `npm start` to run and keep the server active.',
-                    ),
-                    subHeading('Install app'),
-                    body(
-                      'Kindly assign your IP address to `ipAddress` variable in `main.dart` file.',
-                    ),
-                    body(
-                      'Build & install the app in 2 different devices which should be connected to the given IP address.',
-                    ),
                     subHeading('Start chatting'),
+                    body(
+                      'Kindly build & install the app in 2 different devices or open the app in 2 different windows.',
+                    ),
                     body('Login with your credentials and start chatting.'),
                     body(
                       'You can also `clear` the chats from clear_all button in AppBar.',
