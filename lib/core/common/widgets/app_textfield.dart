@@ -55,7 +55,7 @@ class AppTextField extends StatelessWidget {
         style: const TextStyle(fontSize: 16),
         onTapOutside: (_) => FocusScope.of(context).unfocus(),
         cursorColor: AppColors.prim,
-        obscuringCharacter: '●',
+        // obscuringCharacter: '●',
         //
         decoration: InputDecoration(
           errorStyle: const TextStyle(fontWeight: FontWeight.w500),

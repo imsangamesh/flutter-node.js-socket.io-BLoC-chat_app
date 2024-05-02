@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 
-const ipAddress = 'http://192.168.186.210:3000';
+const ipAddress = 'https://node-js-flutter-chat-app-server.onrender.com';
 
 void main() async {
   await Hive.initFlutter();

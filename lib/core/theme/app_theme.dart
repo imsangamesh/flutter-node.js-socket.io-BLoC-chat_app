@@ -116,6 +116,7 @@ class AppTheme {
   static ElevatedButtonThemeData elevatedButton() {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        fixedSize: const Size.fromHeight(45),
         padding: const EdgeInsets.symmetric(horizontal: kButtonPad),
         foregroundColor: AppColors.scaffold,
         backgroundColor: AppColors.prim,
@@ -132,6 +133,7 @@ class AppTheme {
   static OutlinedButtonThemeData outlinedButton() {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
+        fixedSize: const Size.fromHeight(45),
         padding: const EdgeInsets.symmetric(horizontal: kButtonPad),
         foregroundColor: AppColors.prim,
         disabledForegroundColor: AppColors.grey,
@@ -147,6 +149,7 @@ class AppTheme {
   static TextButtonThemeData textButton() {
     return TextButtonThemeData(
       style: TextButton.styleFrom(
+        fixedSize: const Size.fromHeight(40),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         foregroundColor: AppColors.prim,
         disabledForegroundColor: AppColors.prim.withAlpha(150),
