@@ -55,72 +55,77 @@ class _SignInScreenState extends State<SignInScreen> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          body: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
+        return Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Scaffold(
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset(AppImages.logo, width: 40),
-                        const SizedBox(width: 10),
-                        Text('Sign In', style: AppTStyles.large),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(AppImages.logo, width: 40),
+                            const SizedBox(width: 10),
+                            Text('Sign In', style: AppTStyles.large),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+
+                        /// -------------------- `EMAIL`
+                        AppTextField(
+                          emailCntr,
+                          'Email',
+                          validator: Validators.email,
+                        ),
+
+                        /// -------------------- `PASSWORD`
+                        StatefulBuilder(
+                          builder: (_, setValue) {
+                            return AppTextField(
+                              passwordCntr,
+                              'Password',
+                              isObscure: isObscure,
+                              validator: Validators.notEmpty,
+                              suffixIcon: isObscure
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              suffixFun: () =>
+                                  setValue(() => isObscure = !isObscure),
+                            );
+                          },
+                        ),
+
+                        /// -------------------- `SUBMIT BUTTON`
+                        SizedBox(
+                          width: context.w,
+                          child: ElevatedBtn(
+                            'Sign In',
+                            () => signIn(context),
+                            loading: state is AuthLoading,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't have an account? ",
+                              style: AppTStyles.caption,
+                            ),
+                            TextButton(
+                              onPressed: () => NavUtils.back(context),
+                              child: const Text('Sign Up'),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-
-                    /// -------------------- `EMAIL`
-                    AppTextField(
-                      emailCntr,
-                      'Email',
-                      validator: Validators.email,
-                    ),
-
-                    /// -------------------- `PASSWORD`
-                    StatefulBuilder(
-                      builder: (_, setValue) {
-                        return AppTextField(
-                          passwordCntr,
-                          'Password',
-                          isObscure: isObscure,
-                          validator: Validators.notEmpty,
-                          suffixIcon: isObscure
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          suffixFun: () =>
-                              setValue(() => isObscure = !isObscure),
-                        );
-                      },
-                    ),
-
-                    /// -------------------- `SUBMIT BUTTON`
-                    SizedBox(
-                      width: context.w,
-                      child: ElevatedBtn(
-                        'Sign In',
-                        () => signIn(context),
-                        loading: state is AuthLoading,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account? ",
-                          style: AppTStyles.caption,
-                        ),
-                        TextButton(
-                          onPressed: () => NavUtils.back(context),
-                          child: const Text('Sign Up'),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

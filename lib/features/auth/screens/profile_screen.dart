@@ -69,145 +69,157 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text('My Profile')),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            StatefulBuilder(
-              builder: (_, setValue) {
-                return Form(
-                  key: formKey,
-                  child: BlocConsumer<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state is AuthFailure) {
-                        AppSnackbar.error(context, state.message);
-                      } else if (state is AuthSuccess) {
-                        AppSnackbar.success(context, 'User details updated!');
-                        setValue(() => isEdit = false);
-                      }
-                    },
-                    builder: (context, state) {
-                      return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            // - - - - - - - - - - - - NAME
-                            AppTextField(
-                              nameCntr,
-                              'Name',
-                              readOnly: !isEdit,
-                              validator: Validators.notEmpty,
-                            ),
-                            // - - - - - - - - - - - - EMAIL
-                            AppTextField(
-                              emailCntr,
-                              'Email',
-                              readOnly: !isEdit,
-                              validator: Validators.email,
-                            ),
-                            // - - - - - - - - - - - - PASSWORD
-                            AppTextField(
-                              passwordCntr,
-                              'Password',
-                              isObscure: isObscure,
-                              readOnly: !isEdit,
-                              validator: Validators.notEmpty,
-                              suffixIcon: isObscure
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              suffixFun: () =>
-                                  setValue(() => isObscure = !isObscure),
-                            ),
-
-                            // - - - - - - - - - - - - EDIT & SUBMIT BUTTONS
-                            if (isEdit)
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: OutlinedBtn('Cancel', () {
-                                      setValue(() => isEdit = false);
-                                      nameCntr.text = slAuth.user!.name;
-                                      emailCntr.text = slAuth.user!.email;
-                                      passwordCntr.text = slAuth.user!.password;
-                                    }),
-                                  ),
-                                  const SizedBox(width: 15),
-                                  Expanded(
-                                    child: ElevatedBtn('Save', saveEdits),
-                                  ),
-                                ],
-                              )
-                            else
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextBtn(
-                                  'Edit',
-                                  () => setValue(() => isEdit = true),
-                                  icon: Icons.edit,
-                                ),
-                              ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-
-            const Spacer(),
-            const Divider(height: 30),
-
-            // - - - - - - - - - - - - - - - - THEME SWITCHER
-            Row(
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 600),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(title: const Text('My Profile')),
+          body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
               children: [
-                BlocBuilder<ThemeCubit, bool>(
-                  builder: (context, state) {
-                    return Expanded(
-                      flex: 4,
-                      child: ListTile(
-                        onTap: () => context.theme.toggleTheme(),
-                        leading: const Icon(Icons.auto_awesome_rounded),
-                        trailing: ThemeSwitch(
-                          value: slTheme.isDark,
-                          onTap: () => context.theme.toggleTheme(),
-                        ),
+                StatefulBuilder(
+                  builder: (_, setValue) {
+                    return Form(
+                      key: formKey,
+                      child: BlocConsumer<AuthBloc, AuthState>(
+                        listener: (context, state) {
+                          if (state is AuthFailure) {
+                            AppSnackbar.error(context, state.message);
+                          } else if (state is AuthSuccess) {
+                            AppSnackbar.success(
+                              context,
+                              'User details updated!',
+                            );
+                            setValue(() => isEdit = false);
+                          }
+                        },
+                        builder: (context, state) {
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                // - - - - - - - - - - - - NAME
+                                AppTextField(
+                                  nameCntr,
+                                  'Name',
+                                  readOnly: !isEdit,
+                                  validator: Validators.notEmpty,
+                                ),
+                                // - - - - - - - - - - - - EMAIL
+                                AppTextField(
+                                  emailCntr,
+                                  'Email',
+                                  readOnly: !isEdit,
+                                  validator: Validators.email,
+                                ),
+                                // - - - - - - - - - - - - PASSWORD
+                                AppTextField(
+                                  passwordCntr,
+                                  'Password',
+                                  isObscure: isObscure,
+                                  readOnly: !isEdit,
+                                  validator: Validators.notEmpty,
+                                  suffixIcon: isObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  suffixFun: () =>
+                                      setValue(() => isObscure = !isObscure),
+                                ),
+
+                                // - - - - - - - - - - - - EDIT & SUBMIT BUTTONS
+                                if (isEdit)
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: OutlinedBtn('Cancel', () {
+                                          setValue(() => isEdit = false);
+                                          nameCntr.text = slAuth.user!.name;
+                                          emailCntr.text = slAuth.user!.email;
+                                          passwordCntr.text =
+                                              slAuth.user!.password;
+                                        }),
+                                      ),
+                                      const SizedBox(width: 15),
+                                      Expanded(
+                                        child: ElevatedBtn('Save', saveEdits),
+                                      ),
+                                    ],
+                                  )
+                                else
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: TextBtn(
+                                      'Edit',
+                                      () => setValue(() => isEdit = true),
+                                      icon: Icons.edit,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     );
                   },
                 ),
-                const SizedBox(width: 15),
 
-                // - - - - - - - - - - - - - - - - LOGOUT
-                BlocListener<AuthBloc, AuthState>(
-                  listener: (context, state) {
-                    if (state is AuthSignedOut) {
-                      NavUtils.offAll(context, const SignInScreen());
-                      AppSnackbar.success(context, 'Signed out successfully!');
-                    }
-                  },
-                  child: Expanded(
-                    flex: 6,
-                    child: ListTile(
-                      onTap: showLogoutDialog,
-                      tileColor: AppColors.danger.withAlpha(50),
-                      leading: const Icon(
-                        Icons.exit_to_app,
-                        color: AppColors.danger,
-                      ),
-                      title: Text(
-                        'Sign Out',
-                        style: AppTStyles.primary
-                            .copyWith(color: AppColors.danger),
+                const Spacer(),
+                const Divider(height: 30),
+
+                // - - - - - - - - - - - - - - - - THEME SWITCHER
+                Row(
+                  children: [
+                    BlocBuilder<ThemeCubit, bool>(
+                      builder: (context, state) {
+                        return Expanded(
+                          flex: 4,
+                          child: ListTile(
+                            onTap: () => context.theme.toggleTheme(),
+                            leading: const Icon(Icons.auto_awesome_rounded),
+                            trailing: ThemeSwitch(
+                              value: slTheme.isDark,
+                              onTap: () => context.theme.toggleTheme(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(width: 15),
+
+                    // - - - - - - - - - - - - - - - - LOGOUT
+                    BlocListener<AuthBloc, AuthState>(
+                      listener: (context, state) {
+                        if (state is AuthSignedOut) {
+                          NavUtils.offAll(context, const SignInScreen());
+                          AppSnackbar.success(
+                            context,
+                            'Signed out successfully!',
+                          );
+                        }
+                      },
+                      child: Expanded(
+                        flex: 6,
+                        child: ListTile(
+                          onTap: showLogoutDialog,
+                          tileColor: AppColors.danger.withAlpha(50),
+                          leading: const Icon(
+                            Icons.exit_to_app,
+                            color: AppColors.danger,
+                          ),
+                          title: Text(
+                            'Sign Out',
+                            style: AppTStyles.primary
+                                .copyWith(color: AppColors.danger),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

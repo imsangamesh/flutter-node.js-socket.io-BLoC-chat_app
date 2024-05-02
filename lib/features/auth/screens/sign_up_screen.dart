@@ -62,84 +62,89 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       },
       builder: (_, state) {
-        return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: formKey,
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
+        return Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Scaffold(
+              body: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Form(
+                  key: formKey,
+                  child: Center(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset(AppImages.logo, width: 40),
-                        const SizedBox(width: 10),
-                        Text('Sign Up', style: AppTStyles.large),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(AppImages.logo, width: 40),
+                            const SizedBox(width: 10),
+                            Text('Sign Up', style: AppTStyles.large),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
 
-                    /// -------------------- `NAME`
-                    AppTextField(
-                      nameCntr,
-                      'Name',
-                      validator: Validators.notEmpty,
-                    ),
-
-                    /// -------------------- `EMAIL`
-                    AppTextField(
-                      emailCntr,
-                      'Email',
-                      inputType: TextInputType.emailAddress,
-                      validator: Validators.email,
-                    ),
-
-                    /// -------------------- `PASSWORD`
-                    StatefulBuilder(
-                      builder: (_, setValue) {
-                        return AppTextField(
-                          passwordCntr,
-                          'Password',
-                          isObscure: isObscure,
+                        /// -------------------- `NAME`
+                        AppTextField(
+                          nameCntr,
+                          'Name',
                           validator: Validators.notEmpty,
-                          suffixIcon: isObscure
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          suffixFun: () =>
-                              setValue(() => isObscure = !isObscure),
-                        );
-                      },
-                    ),
-
-                    /// -------------------- `SUBMIT BUTTON`
-                    SizedBox(
-                      width: context.w,
-                      child: ElevatedBtn(
-                        'Sign Up',
-                        () => signUp(context),
-                        loading: state is AuthLoading,
-                      ),
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Already have an account? ',
-                          style: AppTStyles.caption,
                         ),
-                        TextButton(
-                          onPressed: () => NavUtils.to(
-                            context,
-                            const SignInScreen(),
+
+                        /// -------------------- `EMAIL`
+                        AppTextField(
+                          emailCntr,
+                          'Email',
+                          inputType: TextInputType.emailAddress,
+                          validator: Validators.email,
+                        ),
+
+                        /// -------------------- `PASSWORD`
+                        StatefulBuilder(
+                          builder: (_, setValue) {
+                            return AppTextField(
+                              passwordCntr,
+                              'Password',
+                              isObscure: isObscure,
+                              validator: Validators.notEmpty,
+                              suffixIcon: isObscure
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              suffixFun: () =>
+                                  setValue(() => isObscure = !isObscure),
+                            );
+                          },
+                        ),
+
+                        /// -------------------- `SUBMIT BUTTON`
+                        SizedBox(
+                          width: context.w,
+                          child: ElevatedBtn(
+                            'Sign Up',
+                            () => signUp(context),
+                            loading: state is AuthLoading,
                           ),
-                          child: const Text('Sign In'),
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Already have an account? ',
+                              style: AppTStyles.caption,
+                            ),
+                            TextButton(
+                              onPressed: () => NavUtils.to(
+                                context,
+                                const SignInScreen(),
+                              ),
+                              child: const Text('Sign In'),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),

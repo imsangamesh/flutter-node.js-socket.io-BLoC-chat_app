@@ -112,73 +112,79 @@ class _ChatScreenState extends State<ChatScreen> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Row(
-              children: [
-                Image.asset(AppImages.logo, width: 40),
-                const SizedBox(width: 10),
-                const Text('Chat Room'),
-              ],
-            ),
-            actions: [
-              if (state is ChatsLoaded && state.messages.isNotEmpty)
-                IconButton(
-                  onPressed: showClearChatDialog,
-                  icon: const Icon(Icons.clear_all, size: 28),
+        return Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Scaffold(
+              appBar: AppBar(
+                title: Row(
+                  children: [
+                    Image.asset(AppImages.logo, width: 40),
+                    const SizedBox(width: 10),
+                    const Text('Chat Room'),
+                  ],
                 ),
-              IconButton(
-                onPressed: () => NavUtils.to(context, const ProfileScreen()),
-                icon: const Icon(Icons.person_4_rounded),
-              ),
-              IconButton(
-                onPressed: () => NavUtils.to(context, const InfoScreen()),
-                icon: const Icon(Icons.info_outline),
-              ),
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Builder(
-                    builder: (context) {
-                      if (state is ChatsLoaded) {
-                        // - - - - - - - - - - - - EMPTY LIST
-                        if (state.messages.isEmpty) {
-                          return const EmptyList(
-                            'No messages yet! Be the first to send',
-                          );
-                        }
-                        // - - - - - - - - - - - - MESSAGES LIST
-                        return ListView.builder(
-                          itemCount: state.messages.length,
-                          itemBuilder: (context, i) {
-                            return ChatMsgTile(state.messages[i]);
-                          },
-                        );
-                      } else if (state is ChatFailure) {
-                        // - - - - - - - - - - - - ERROR
-                        return Center(child: Text(state.message));
-                      } else {
-                        // - - - - - - - - - - - - LOADER
-                        return const Loader();
-                      }
-                    },
+                actions: [
+                  if (state is ChatsLoaded && state.messages.isNotEmpty)
+                    IconButton(
+                      onPressed: showClearChatDialog,
+                      icon: const Icon(Icons.clear_all, size: 28),
+                    ),
+                  IconButton(
+                    onPressed: () =>
+                        NavUtils.to(context, const ProfileScreen()),
+                    icon: const Icon(Icons.person_4_rounded),
                   ),
-                ),
+                  IconButton(
+                    onPressed: () => NavUtils.to(context, const InfoScreen()),
+                    icon: const Icon(Icons.info_outline),
+                  ),
+                ],
+              ),
+              body: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Builder(
+                        builder: (context) {
+                          if (state is ChatsLoaded) {
+                            // - - - - - - - - - - - - EMPTY LIST
+                            if (state.messages.isEmpty) {
+                              return const EmptyList(
+                                'No messages yet! Be the first to send',
+                              );
+                            }
+                            // - - - - - - - - - - - - MESSAGES LIST
+                            return ListView.builder(
+                              itemCount: state.messages.length,
+                              itemBuilder: (context, i) {
+                                return ChatMsgTile(state.messages[i]);
+                              },
+                            );
+                          } else if (state is ChatFailure) {
+                            // - - - - - - - - - - - - ERROR
+                            return Center(child: Text(state.message));
+                          } else {
+                            // - - - - - - - - - - - - LOADER
+                            return const Loader();
+                          }
+                        },
+                      ),
+                    ),
 
-                // - - - - - - - - `MESSAGE TEXTFIELD`
-                AppTextField(
-                  msgCntr,
-                  'Your message',
-                  maxLines: null,
-                  bottomPadding: 3,
-                  suffixFun: sendMessage,
-                  suffixIcon: Icons.send_rounded,
+                    // - - - - - - - - `MESSAGE TEXTFIELD`
+                    AppTextField(
+                      msgCntr,
+                      'Your message',
+                      maxLines: null,
+                      bottomPadding: 3,
+                      suffixFun: sendMessage,
+                      suffixIcon: Icons.send_rounded,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         );

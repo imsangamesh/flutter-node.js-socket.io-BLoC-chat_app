@@ -22,70 +22,75 @@ class InfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Help!')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            /// - - - - - - - - - - - - - - - - `CHAT CONNECTION`
-            InfoTile(
-              title: 'Chat Connection',
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 600),
+        child: Scaffold(
+          appBar: AppBar(title: const Text('Help!')),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(15),
+            child: Column(
               children: [
-                subHeading('Server set up'),
-                body(
-                  'Please go to `server` directory from root directory and run `npm install` to install packages.',
+                /// - - - - - - - - - - - - - - - - `CHAT CONNECTION`
+                InfoTile(
+                  title: 'Chat Connection',
+                  children: [
+                    subHeading('Server set up'),
+                    body(
+                      'Please go to `server` directory from root directory and run `npm install` to install packages.',
+                    ),
+                    body(
+                      'Run `npm start` to run and keep the server active.',
+                    ),
+                    subHeading('Install app'),
+                    body(
+                      'Kindly assign your IP address to `ipAddress` variable in `main.dart` file.',
+                    ),
+                    body(
+                      'Build & install the app in 2 different devices which should be connected to the given IP address.',
+                    ),
+                    subHeading('Start chatting'),
+                    body('Login with your credentials and start chatting.'),
+                    body(
+                      'You can also `clear` the chats from clear_all button in AppBar.',
+                    ),
+                  ],
                 ),
-                body(
-                  'Run `npm start` to run and keep the server active.',
-                ),
-                subHeading('Install app'),
-                body(
-                  'Kindly assign your IP address to `ipAddress` variable in `main.dart` file.',
-                ),
-                body(
-                  'Build & install the app in 2 different devices which should be connected to the given IP address.',
-                ),
-                subHeading('Start chatting'),
-                body('Login with your credentials and start chatting.'),
-                body(
-                  'You can also `clear` the chats from clear_all button in AppBar.',
-                ),
-              ],
-            ),
 
-            /// - - - - - - - - - - - - - - - - `USER AUTHENTICATION`
-            InfoTile(
-              title: 'User Authentication',
-              children: [
-                subHeading('Sign Up'),
-                body(
-                  'User is allowed to sign up with `name`, `email` and `password`.',
+                /// - - - - - - - - - - - - - - - - `USER AUTHENTICATION`
+                InfoTile(
+                  title: 'User Authentication',
+                  children: [
+                    subHeading('Sign Up'),
+                    body(
+                      'User is allowed to sign up with `name`, `email` and `password`.',
+                    ),
+                    body('Implemented Validations for each field.'),
+                    subHeading('Sign In'),
+                    body(
+                      'User is allowed to sign in with `email` and `password`.',
+                    ),
+                    body('Implemented Validations for each field.'),
+                    subHeading('Edit'),
+                    body(
+                      'User can edit his `name`, `email` and `password` from Profile Screen.',
+                    ),
+                    subHeading('Sign Out'),
+                    body('User can logout from profile screen.'),
+                  ],
                 ),
-                body('Implemented Validations for each field.'),
-                subHeading('Sign In'),
-                body(
-                  'User is allowed to sign in with `email` and `password`.',
-                ),
-                body('Implemented Validations for each field.'),
-                subHeading('Edit'),
-                body(
-                  'User can edit his `name`, `email` and `password` from Profile Screen.',
-                ),
-                subHeading('Sign Out'),
-                body('User can logout from profile screen.'),
-              ],
-            ),
 
-            /// - - - - - - - - - - - - - - - - `USER AUTHENTICATION`
-            InfoTile(
-              title: 'Others',
-              children: [
-                subHeading('Change Theme'),
-                body('User can switch between themes as per his interest.'),
+                /// - - - - - - - - - - - - - - - - `USER AUTHENTICATION`
+                InfoTile(
+                  title: 'Others',
+                  children: [
+                    subHeading('Change Theme'),
+                    body('User can switch between themes as per his interest.'),
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
